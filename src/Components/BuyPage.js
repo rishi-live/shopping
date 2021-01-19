@@ -4,18 +4,19 @@ import { random, commerce } from "faker";
 import { Container, Row, Col } from "reactstrap";
 import CartItem from "./CartItem";
 
-const apiKey = "563492ad6f91700001000001e36876584cd846a58c7ca0aff2aefdeb";
+const apiKey = "";
 const url = "https://api.pexels.com/v1/search?query=laptop&per_page=6&page=1";
-const localurl = "";
+// const localurl = "";
 const BuyPage = ({ addInCart }) => {
   const [product, setProduct] = useState([]);
   const fetchPhotos = async () => {
     const { data } = await Axios.get(url, {
-      header: {
+      headers: {
         Authorization: apiKey,
       },
     });
     const { photos } = data;
+    console.log(product);
     const allProduct = photos.map((photo) => ({
       smallImage: photo.src.medium,
       tinyImage: photo.src.tiny,
@@ -28,9 +29,13 @@ const BuyPage = ({ addInCart }) => {
     //     const response = await Axios.get(localurl);
     //   };
   };
+
+  const uu = random.uuid();
+
   useEffect(() => {
     fetchPhotos();
   }, []);
+
   return (
     <Container fluid>
       <h1 className="text-success text-center">Buy Page</h1>
@@ -40,6 +45,7 @@ const BuyPage = ({ addInCart }) => {
             <CartItem product={product} addInCart={addInCart} />
           </Col>
         ))}
+        <h2>{uu}</h2>
       </Row>
     </Container>
   );
